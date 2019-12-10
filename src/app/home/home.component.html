@@ -1,0 +1,83 @@
+<div class="all-wrap" [class.example-is-mobile]="mobileQuery.matches"> 
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <span class="hamburger-icon">
+              <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+            </span>
+            <span class="toolbar-center"><h1>Butterfly Group Admin Panel</h1></span>
+            <span>
+                <mat-menu #appMenu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>settings</mat-icon>
+                        <span>Settings</span>
+                    </button>
+                    <button mat-menu-item (click)="logout($event)">
+                        <mat-icon>logout</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </mat-menu>
+                
+                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </span>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        
+          <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [(opened)]="navBarOpened">
+              <div class="user-info">
+                  <div class="image">
+                      <img src="../assets/images/user.png" width="48" height="48" alt="User">
+                  </div>
+                  <div class="info-container">
+                      <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
+                      <div class="email">john.doe@example.com</div>
+                      <!--div class="btn-group user-helper-dropdown">
+                          <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                          <ul class="dropdown-menu pull-right">
+                              <li>
+                                <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                 <mat-icon matListIcon>person</mat-icon>Profile
+                                </a>
+                              </li>
+                              <li role="separator" class="divider"></li>
+                              <li>
+                                <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                  <mat-icon matListIcon>input</mat-icon>Sign Out
+                                </a>
+                              </li>
+                          </ul>
+                      </div -->
+                  </div>
+              </div>
+            <mat-list>
+              <mat-list-item [routerLink]="['./campaign']" routerLinkActive="selected">
+                  <mat-icon matListIcon>contactless</mat-icon>
+                  <h3 matLine>Campaign</h3>
+              </mat-list-item>
+              <mat-list-item [routerLink]="['./messagetemplate']" routerLinkActive="selected">
+                <mat-icon matListIcon>message</mat-icon>              
+                <h3 matLine>Message Template</h3>
+              </mat-list-item>
+            </mat-list>
+            <div class="legal">
+                <div class="copyright">
+                    © 2019 - 2020 <a href="javascript:void(0);">Butterfly Group</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+          </mat-sidenav>
+         
+          <mat-sidenav-content class="content-wrap">
+         
+            <main class="content">
+                <router-outlet></router-outlet>
+            </main>
+         
+          </mat-sidenav-content>
+         
+        </mat-sidenav-container>
+  </div>
