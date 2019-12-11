@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { EventEmitter } from 'events';
-import {Router} from "@angular/router"
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,25 +9,33 @@ import {Router} from "@angular/router"
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  UserName: string;
+  Password: string;
+  hide = true;
+  @Output() submitEM = new EventEmitter();
+  form: FormGroup;
+  constructor(private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      username: [this.UserName, [
+        Validators.required
+      ]],
+      password: [this.Password, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(10)
+      ]]
+    });
   }
-
-  form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
-
   submit() {
     if (this.form.valid) {
       this.submitEM.emit(this.form.value);
       this.router.navigate(['/home']);
     }
   }
-  //@Input() error: string | null;
+ // @Input() error: string | null;
 
-  @Output() submitEM = new EventEmitter();
+
 
 }
