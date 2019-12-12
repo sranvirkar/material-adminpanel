@@ -7,6 +7,9 @@
 </head>
 <body>
   <mat-card>
+      <mat-card-actions align="end">
+          <button  mat-raised-button color="warn" (click)="openDialog('Add',{})">Add Campaign</button>
+      </mat-card-actions>
     <mat-card-content>
         <table mat-table [dataSource]="dataSource" #mytable class="mat-elevation-z4">
 
@@ -40,9 +43,6 @@
           </table>
 
     </mat-card-content>
-    <mat-card-actions >
-        <button mat-raised-button color="warn" (click)="openDialog('Add',{})">Add Campaign</button>
-    </mat-card-actions>
 </mat-card>
 </body>
 </html>

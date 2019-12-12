@@ -7,7 +7,10 @@
 </head>
 <body>
   <mat-card>
-    <mat-card-content>
+      <mat-card-actions align="end" >
+          <button class="action"  mat-raised-button color="warn" (click)="openDialog('Add',{})">Add Message</button>
+      </mat-card-actions>
+    <mat-card-content >
         <table mat-table [dataSource]="dataSource" #mytable class="mat-elevation-z4">
 
             <!--- Note that these columns can be defined in any order.
@@ -45,11 +48,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-
     </mat-card-content>
-    <mat-card-actions >
-        <button mat-raised-button color="warn" (click)="openDialog('Add',{})">Add Message</button>
-    </mat-card-actions>
+
 </mat-card>
 </body>
 </html>

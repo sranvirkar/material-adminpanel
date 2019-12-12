@@ -14,8 +14,9 @@ export class LoginComponent implements OnInit {
   hide = true;
   @Output() submitEM = new EventEmitter();
   form: FormGroup;
-  password = new FormControl('', [Validators.required, Validators.minLength(4),
-    Validators.maxLength(10), Validators.pattern(/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g ) ]);
+ // password = new FormControl('', [Validators.required, Validators.minLength(8),
+ //   Validators.maxLength(16), Validators.pattern(/^[!@#\$%\^\&*\)\(+=._-]{8,}$/g ) ]);
+
   constructor(private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -23,41 +24,45 @@ export class LoginComponent implements OnInit {
       username: [this.UserName, [
         Validators.required
       ]],
-     // password: [this.Password, [
-      //  Validators.required,
-      //  Validators.minLength(4),
-      //  Validators.maxLength(10)
-      // ]]
+     password: [this.Password, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16),
+        Validators.pattern(/^[!@#\$%\^\&*\)\(+=._-]{8,}$/g ),
+       // Validators.pattern(/^[a-zA-Z0-9]+$/g )
+       ]]
     });
   }
 
-  getErrorMessage() {
-    if (this.password.hasError('required')) {
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName);
+  }
+  // getErrorMessage() {
+  //  if (this.password.hasError('required')) {
 
-      return 'You must enter a password' ;
-  }
-    if (this.password.hasError('minlength')) {
-      return 'Minimum 4 characters' ;
+  //    return 'You must enter a password' ;
+  // }
+  //  if (this.password.hasError('minlength')) {
+  //    return 'Minimum 8 characters' ;
 
-  }
-    if (this.password.hasError('maxlength')) {
-      return 'Maximum 10 characters' ;
-  }
-    if (this.password.hasError('pattern')) {
-      return 'Atleast 1 special symbol is required' ;
-  }
+ // }
+  //  if (this.password.hasError('maxlength')) {
+  //    return 'Maximum 16 characters' ;
+ // }
+  //  if (this.password.hasError('pattern')) {
+   //   return 'Atleast 1 special symbol is required' ;
+ // }
 
        //     '';
-  }
-
+ // }
   submit() {
-    if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
-      this.router.navigate(['/home']);
-    }
+   if (this.form.valid) {
+   this.submitEM.emit(this.form.value);
+   this.router.navigate(['/home']);
+   // }
   }
  // @Input() error: string | null;
 
 
-
+  }
 }
