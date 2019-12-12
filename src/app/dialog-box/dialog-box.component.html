@@ -1,7 +1,7 @@
 <h2 matDialogTitle>Add Campaign</h2>
 
 <mat-dialog-content>
-    <form [formGroup]="form" (ngSubmit)="form.valid && submit()" novalidate>
+    <form [formGroup]="form" (ngSubmit)="form.valid && doAction()">
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate">
     <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.name" [ngModelOptions]="{standalone: true}" required>
     <mat-error> Campaign Name is Required</mat-error>
@@ -12,8 +12,7 @@
     </form>
 
 </mat-dialog-content>
-
 <mat-dialog-actions>
-    <button mat-button (click)="doAction()">{{action}}</button>
+    <button type="submit" mat-button>{{action}}</button>
     <button mat-button matDialogClose>Close</button>
 </mat-dialog-actions>
