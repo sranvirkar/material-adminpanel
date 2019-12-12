@@ -1,6 +1,7 @@
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +28,8 @@ import { DialogBoxForMessageComponent } from './dialog-box-for-message/dialog-bo
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   entryComponents: [ DialogBoxComponent,
     DialogBoxForMessageComponent

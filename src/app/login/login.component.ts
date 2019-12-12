@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   hide = true;
   @Output() submitEM = new EventEmitter();
   form: FormGroup;
+  password = new FormControl('', [Validators.required, Validators.minLength(4),
+    Validators.maxLength(10), Validators.pattern(/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g ) ]);
   constructor(private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -21,13 +23,33 @@ export class LoginComponent implements OnInit {
       username: [this.UserName, [
         Validators.required
       ]],
-      password: [this.Password, [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(10)
-      ]]
+     // password: [this.Password, [
+      //  Validators.required,
+      //  Validators.minLength(4),
+      //  Validators.maxLength(10)
+      // ]]
     });
   }
+
+  getErrorMessage() {
+    if (this.password.hasError('required')) {
+
+      return 'You must enter a password' ;
+  }
+    if (this.password.hasError('minlength')) {
+      return 'Minimum 4 characters' ;
+
+  }
+    if (this.password.hasError('maxlength')) {
+      return 'Maximum 10 characters' ;
+  }
+    if (this.password.hasError('pattern')) {
+      return 'Atleast 1 special symbol is required' ;
+  }
+
+       //     '';
+  }
+
   submit() {
     if (this.form.valid) {
       this.submitEM.emit(this.form.value);

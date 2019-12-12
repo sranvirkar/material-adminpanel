@@ -1,5 +1,6 @@
 import { DialogBoxForMessageComponent } from './../dialog-box-for-message/dialog-box-for-message.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface MessageItems {
@@ -24,19 +25,69 @@ const ELEMENT_DATA: MessageItems[] = [
   styleUrls: ['./message-template.component.scss']
 })
 export class MessageTemplateComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'Action'];
   dataSource = ELEMENT_DATA;
+  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
-  openDialog(): void {
-    this.dialog.open(DialogBoxForMessageComponent, {
-      width: '400px',
+  openDialog(action, obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxForMessageComponent, {
+      width: '300px',
+      data: obj
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        this.addRowData(result.data);
+      } else if (result.event === 'Update') {
+        this.updateRowData(result.data);
+      } else if (result.event === 'Delete') {
+        this.deleteRowData(result.data);
+      }
     });
   }
+  addRowData(rowobj) {
+    let d = new Date();
+    this.dataSource.push({
+      id: d.getTime(),
+      name: rowobj.name,
+      body: rowobj.body,
+      campaignName: rowobj.campaignName,
+
+
+    });
+    this.table.renderRows();
+
+  }
+
+  updateRowData(rowobj) {
+    this.dataSource = this.dataSource.filter((value, key) => {
+      if (value.id === rowobj.id) {
+        value.name = rowobj.name;
+      }
+      return true;
+    });
+  }
+  deleteRowData( rowobj ) {
+    this.dataSource = this.dataSource.filter((value, key) => {
+      return value.id !== rowobj.id;
+    });
+  }
+ // openDialog(): void {
+ //   this.dialog.open(DialogBoxForMessageComponent, {
+ //     width: '400px',
+ //   });
+
   AddMessage() {
     console.log('Add logic');
+  }
+  Delete() {
+    console.log('Delete logic');
+  }
+  Edit() {
+    console.log('Edit logic');
   }
 }
 
