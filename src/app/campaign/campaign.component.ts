@@ -25,7 +25,7 @@ const ELEMENT_DATA: CampaignItems[] = [
 })
 
 export class CampaignComponent implements OnInit {
-
+  resourcesLoaded = true;
   displayedColumns: string[] = ['id', 'name', 'Action'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;

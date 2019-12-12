@@ -3,7 +3,7 @@
 <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate1" >
         <mat-label>Campaign Name</mat-label>
-        <mat-select required [(ngModel)]="localdata.campaignName" [ngModelOptions]="{standalone: true}">
+        <mat-select required [(ngModel)]="localdata.campaignName"  formControlName="campaignName">
           <mat-option value="Campaign1">Campaign1</mat-option>
           <mat-option value="Campaign2">Campaign2</mat-option>
           <mat-option value="Campaign3">Campaign3</mat-option>
@@ -14,14 +14,14 @@
 
     </ng-template>
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate2" >
-    <input matInput placeholder="Template Name" required [(ngModel)]="localdata.name" [ngModelOptions]="{standalone: true}">
+    <input matInput placeholder="Template Name" required [(ngModel)]="localdata.name" formControlName="templateName">
     <mat-error >Template Name is Required</mat-error>
   </mat-form-field>
   <ng-template #elseTemplate2>
       Sure to delete <b>{{localdata.name}}</b>?
     </ng-template>
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate3"  >
-    <textarea matInput placeholder="Template Body" required [(ngModel)]="localdata.body" [ngModelOptions]="{standalone: true}"></textarea>
+    <textarea matInput placeholder="Template Body" required [(ngModel)]="localdata.body" formControlName="templateBody"></textarea>
     <mat-error >Template Body is Required</mat-error>
   </mat-form-field>
   <ng-template #elseTemplate3>
@@ -31,6 +31,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button type="submit" mat-button>{{action}}</button>
+    <button type="submit" mat-button mat-button [disabled]="!form.valid" (click)="doAction()">{{action}}</button>
     <button mat-button matDialogClose>Close</button>
 </mat-dialog-actions>

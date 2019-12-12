@@ -25,6 +25,7 @@ const ELEMENT_DATA: MessageItems[] = [
   styleUrls: ['./message-template.component.scss']
 })
 export class MessageTemplateComponent implements OnInit {
+  resourcesLoaded = true;
   displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'Action'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;

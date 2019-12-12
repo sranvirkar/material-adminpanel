@@ -10,6 +10,7 @@
       <mat-card-actions align="end" >
           <button class="action"  mat-raised-button color="warn" (click)="openDialog('Add',{})">Add Message</button>
       </mat-card-actions>
+      <mat-spinner style="margin:0 auto;" *ngIf="resourcesLoaded === false"></mat-spinner>
     <mat-card-content >
         <table mat-table [dataSource]="dataSource" #mytable class="mat-elevation-z4">
 

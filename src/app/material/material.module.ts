@@ -10,7 +10,8 @@ import { MatInputModule,
   MatMenuModule,
   MatDialogModule,
   MatTableModule,
-  MatTooltipModule } from '@angular/material';
+  MatTooltipModule,
+  MatProgressSpinnerModule } from '@angular/material';
 
 const materialCompoent = [
   MatInputModule,
@@ -24,7 +25,8 @@ const materialCompoent = [
   MatMenuModule,
   MatDialogModule,
   MatTableModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({
