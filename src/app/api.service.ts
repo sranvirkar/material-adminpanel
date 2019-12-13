@@ -32,7 +32,7 @@ export class APIService {
   }
 
   public getAllMessageTemplates(){
-    return this.httpClient.get(`${this.apiBase}/api/getAllMessageTemplate`);
+    return this.httpClient.get(`${this.apiBase}/api/getAllMessageTemplates`);
   }
 
   public getAllMessageTemplatesByCampaign(campaignId: string){
@@ -50,6 +50,7 @@ export class APIService {
   }
 
   public saveMessageTemplate(messagetemplateObj: any) {
+    console.log('this is obj at save message function ' + messagetemplateObj );
     //messagetemplateObj = {campaign_id:"campaign_id", name: "message template name", messageBody: "message template body"}
     const httpOptions = {
       headers: new HttpHeaders({
@@ -57,5 +58,30 @@ export class APIService {
       })
     };
     return this.httpClient.post(`${this.apiBase}/api/messagetemplate/new`, messagetemplateObj, httpOptions);
+  }
+  public updateCampaign(campaignObj: any) {
+    //campaignObj = {campaignName: campaignObj.name };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.httpClient.post(`${this.apiBase}/api/campaign/update`, campaignObj, httpOptions);
+  }
+  public updateMessageTemplate(messagetemplateObj: any) {
+    console.log('this is obj at save message function ' + messagetemplateObj );
+    //messagetemplateObj = {campaign_id:"campaign_id", name: "message template name", messageBody: "message template body"}
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.httpClient.post(`${this.apiBase}/api/messagetemplate/update`, messagetemplateObj, httpOptions);
+  }
+  public deleteCampaign(Id: any){
+    return this.httpClient.get(`${this.apiBase}/api/campaign/delete/${Id}`);
+  }
+  public deleteMessageTemplatesByCampaign(Id: any){
+    return this.httpClient.get(`${this.apiBase}/api/messagetemplate/delete/${Id}`);
   }
 }

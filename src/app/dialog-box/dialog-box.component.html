@@ -3,11 +3,11 @@
 <mat-dialog-content>
     <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate">
-    <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.name" formControlName="campaignName" required>
+    <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.Name" formControlName="campaignName" required>
     <mat-error *ngIf="hasError('campaignName', 'required')">Campaign Name is required</mat-error>
   </mat-form-field>
   <ng-template #elseTemplate>
-      Sure to delete <b>{{localdata.name}}</b>?
+      Sure to delete <b>{{localdata.Name}}</b>?
     </ng-template>
     </form>
 

@@ -81,17 +81,20 @@ export class CampaignComponent implements OnInit {
   }
 
   updateRowData(rowobj) {
-    //this.ApiObj = JSON.stringify(rowobj);
-   // console.log('this is JSONString' + this.ApiObj);
-   // this.apiService.editCampaign(this.ApiObj).toPromise().then(rdata => {
-   //   console.log(rdata);
-    //  this.ngOnInit();
-   // });
+    this.ApiObj = JSON.stringify(rowobj);
+    console.log('this is JSONString' + this.ApiObj);
+    this.apiService.updateCampaign(this.ApiObj).toPromise().then(rdata => {
+    console.log(rdata);
+    this.ngOnInit();
+   });
   }
   deleteRowData( rowobj ) {
-    this.dataSource = this.dataSource.filter((value, key) => {
-      return value.id !== rowobj.id;
-    });
+    this.ApiObj = rowobj;
+    console.log('this is id' + this.ApiObj);
+    this.apiService.deleteCampaign(this.ApiObj).toPromise().then(rdata => {
+    console.log(rdata);
+    this.ngOnInit();
+   });
   }
 
  // openDialog(): void {

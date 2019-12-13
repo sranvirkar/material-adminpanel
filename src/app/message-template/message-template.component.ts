@@ -8,7 +8,7 @@ export interface MessageItems {
   id: number;
   name: string;
   body: string;
-  campaignId: number;
+  campaignId: string;
 }
 
 const ELEMENT_DATA: MessageItems[] = [
@@ -31,6 +31,7 @@ export class MessageTemplateComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   details: any;
   DATA = [];
+  varID: any;
   ApiObj: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
   constructor(private apiService: APIService, public dialog: MatDialog) { }
@@ -63,29 +64,31 @@ export class MessageTemplateComponent implements OnInit {
     });
   }
   addRowData(rowobj) {
+    //this.varID = 'ajinkya';
     this.ApiObj = JSON.stringify(rowobj);
-    console.log('this is JSONString' + this.ApiObj);
+    console.log('this is JSONString' + this.ApiObj );
     this.apiService.saveMessageTemplate(this.ApiObj).toPromise().then(rdata => {
-      console.log(rdata);
-      this.resourcesLoaded = false;
-      this.ngOnInit();
-    });
+    console.log(rdata);
+    this.resourcesLoaded = false;
+    this.ngOnInit();
+   });
   }
 
   updateRowData(rowobj) {
-    this.dataSource = this.dataSource.filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.name = rowobj.name;
-        value.body = rowobj.body;
-        value.campaignId = rowobj.cId;
-      }
-      return true;
-    });
+    this.ApiObj = JSON.stringify(rowobj);
+    console.log('this is JSONString' + this.ApiObj);
+    this.apiService.updateMessageTemplate(this.ApiObj).toPromise().then(rdata => {
+    console.log(rdata);
+    this.ngOnInit();
+   });
   }
   deleteRowData( rowobj ) {
-    this.dataSource = this.dataSource.filter((value, key) => {
-      return value.id !== rowobj.id;
-    });
+    this.ApiObj = rowobj;
+    console.log('this is id' + this.ApiObj);
+    this.apiService.deleteMessageTemplatesByCampaign(this.ApiObj).toPromise().then(rdata => {
+    console.log(rdata);
+    this.ngOnInit();
+   });
   }
  // openDialog(): void {
  //   this.dialog.open(DialogBoxForMessageComponent, {

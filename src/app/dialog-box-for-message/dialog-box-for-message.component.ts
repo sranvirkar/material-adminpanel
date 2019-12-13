@@ -18,11 +18,12 @@ export class DialogBoxForMessageComponent implements OnInit {
   action: string;
   localdata: any;
   form: FormGroup;
-  CampaignID: number;
+  CampaignID: string;
   TemplateName: string;
   TemplateBody: string;
   details: any;
   DATA = [];
+  DataObj: any;
  // form: FormGroup = new FormGroup({
    // CampaignName: new FormControl('', [Validators.required]),
     // TemplateName: new FormControl('', [Validators.required]),
@@ -30,6 +31,7 @@ export class DialogBoxForMessageComponent implements OnInit {
   // });
   constructor(private apiService: APIService, private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogBoxForMessageComponent>,
+    public dialogRef2: MatDialogRef<DialogBoxForMessageComponent>,
      @Optional() @Inject(MAT_DIALOG_DATA) public data: MessageItems) {
     console.log(data);
     this.localdata = {...data};
@@ -46,11 +48,11 @@ export class DialogBoxForMessageComponent implements OnInit {
     });
 
     this.form = this.formBuilder.group({
-      campaignId: [this.CampaignID, [
+      campaign_id: [this.CampaignID, [
         Validators.required
-      ]], templateName: [this.TemplateName, [
+      ]], name: [this.TemplateName, [
         Validators.required
-      ]], templateBody: [this.TemplateBody, [
+      ]], messageBody: [this.TemplateBody, [
         Validators.required
       ]]
     });
@@ -61,13 +63,21 @@ export class DialogBoxForMessageComponent implements OnInit {
     }
 
    doAction() {
-    if (this.form.valid || this.action === 'Delete') {
+    if (this.form.valid && this.action === 'Add') {
     this.dialogRef.close({event: this.action, data: this.form.value});
-    console.log('this is campaign name' + this.localdata.name);
-    console.log('this is campaign name' + this.localdata.body);
-    console.log('this is campaign name' + this.localdata.cname);
-  }
+    }
+    if (this.form.valid && this.action === 'Update') {
+      this.DataObj = ({"campaign_id":""+this.localdata.campaign_id+"","name":""+this.localdata.name+"","messageBody":""+this.localdata.messageBody+"","id":""+this.localdata.id+""});
+     this.dialogRef2.close({event: this.action, data: this.DataObj});
+     console.log('this is campaign name' + this.DataObj.campaignName);
+     }
+    if (this.action === 'Delete') {
+     this.DataObj = this.localdata.id;
+     this.dialogRef2.close({event: this.action, data: this.DataObj});
+     console.log('this is campaign name' + this.DataObj);
+     }
 }
+
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
   }
