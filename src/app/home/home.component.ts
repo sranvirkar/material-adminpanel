@@ -1,6 +1,7 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import {Router} from "@angular/router"
+import { APIService } from "../api.service";
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnDestroy {
   navBarOpened: boolean = true;
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router, private apiService: APIService) {
     this.mobileQuery = media.matchMedia('(max-width: 768px)');
     this.navBarOpened = !this.mobileQuery.matches;
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -28,6 +29,7 @@ export class HomeComponent implements OnDestroy {
   logout(e) : void{
     console.log("clicked....");
     e.preventDefault();
+    this.apiService.logout();
     this.router.navigate(['/login']);
   }
 

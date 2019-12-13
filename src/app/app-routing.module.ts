@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from "./home/home.component";
 import { CampaignComponent } from "./campaign/campaign.component";
@@ -17,7 +17,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'campaign', pathMatch: 'full'},
       {path: 'campaign', component: CampaignComponent},
       {path: 'messagetemplate', component: MessageTemplateComponent},
-    ]
+    ],
+    canActivate: [AuthGuard]
   }
 ];
 

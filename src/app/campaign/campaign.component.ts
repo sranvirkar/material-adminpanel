@@ -2,6 +2,7 @@ import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { APIService } from '../api.service'; 
 
 
 export interface CampaignItems {
@@ -30,9 +31,14 @@ export class CampaignComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private apiService: APIService) { }
 
   ngOnInit() {
+    this.apiService.getAllCampaigns().subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    });
   }
   openDialog(action, obj) {
     obj.action = action;
