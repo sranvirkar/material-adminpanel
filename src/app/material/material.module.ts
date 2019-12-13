@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { OverlayModule } from '@angular/cdk/overlay'
 import { MatInputModule,
   MatButtonModule,
   MatSelectModule,
@@ -11,7 +12,8 @@ import { MatInputModule,
   MatDialogModule,
   MatTableModule,
   MatTooltipModule,
-  MatProgressSpinnerModule } from '@angular/material';
+  MatProgressSpinnerModule,
+  MatSnackBarModule } from '@angular/material';
 
 const materialCompoent = [
   MatInputModule,
@@ -26,7 +28,9 @@ const materialCompoent = [
   MatDialogModule,
   MatTableModule,
   MatTooltipModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  OverlayModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

@@ -19,9 +19,6 @@ export class DialogBoxComponent implements OnInit {
   form: FormGroup;
   CampaignName: string;
   DataObj: any;
- // form: FormGroup = new FormGroup({
- //   campaignName: new FormControl('', [Validators.required]),
-// });
 
   constructor(private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -33,11 +30,11 @@ export class DialogBoxComponent implements OnInit {
     this.action = this.localdata.action;
    }
    ngOnInit() {
-    this.form = this.formBuilder.group({
-      campaignName: [this.CampaignName, [
-        Validators.required
-      ]],
-    });
+      this.form = this.formBuilder.group({
+        campaignName: [this.CampaignName, [
+          Validators.required
+        ]],
+      });
     }
     public hasError = (controlName: string, errorName: string) => {
       return this.form.controls[controlName].hasError(errorName);
@@ -45,19 +42,19 @@ export class DialogBoxComponent implements OnInit {
 
    doAction() {
     if (this.form.valid && this.action === 'Add') {
-    this.dialogRef.close({event: this.action, data: this.form.value});
-    console.log('this is campaign name' + this.localdata);
+      this.dialogRef.close({event: this.action, data: this.form.value});
+      console.log('this is campaign name' + this.localdata);
     }
     if (this.form.valid && this.action === 'Update') {
-       this.DataObj = ({"campaignName":""+this.localdata.Name+"","id":""+this.localdata.id+""});
+      this.DataObj = ({"campaignName":""+this.localdata.Name+"","id":""+this.localdata.id+""});
       this.dialogRef2.close({event: this.action, data: this.DataObj});
       console.log('this is campaign name' + this.DataObj.campaignName);
-      }
+    }
     if (this.action === 'Delete') {
-        this.DataObj = this.localdata.id;
-       this.dialogRef3.close({event: this.action, data: this.DataObj});
-       console.log('this is campaign name' + this.DataObj);
-       }
+      this.DataObj = this.localdata.id;
+      this.dialogRef3.close({event: this.action, data: this.DataObj});
+      console.log('this is campaign name' + this.DataObj);
+    }
 }
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});

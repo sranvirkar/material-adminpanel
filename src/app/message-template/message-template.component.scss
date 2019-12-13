@@ -1,20 +1,20 @@
+.message-template-page {
+  padding: 20px;
 
-@media screen and (max-width: 769px) {
+  > .top-btn-container{
+    text-align: left;
+  }
+
   table {
     width: 100%;
-    margin-top: 30px;
+    margin: 20px 0;
+  }
+  .SmallButtons {
+    font-size: 12px;
+  }
+  .center {
+    text-align: center;
   }
 }
-@media screen and (min-width: 770px) {
-table {
-  width: 650px;
-  margin-top: 30px;
-}
-}
-.SmallButtons {
-  font-size: 12px;
-}
-.center {
-  text-align: center;
-}
+
 

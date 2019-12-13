@@ -2,17 +2,17 @@
 
 <mat-dialog-content>
     <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
-  <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate">
-    <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.Name" formControlName="campaignName" required>
-    <mat-error *ngIf="hasError('campaignName', 'required')">Campaign Name is required</mat-error>
-  </mat-form-field>
-  <ng-template #elseTemplate>
-      Sure to delete <b>{{localdata.Name}}</b>?
-    </ng-template>
+      <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate">
+        <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.Name" formControlName="campaignName" required>
+        <mat-error *ngIf="hasError('campaignName', 'required')">Campaign Name is required</mat-error>
+      </mat-form-field>
+      <ng-template #elseTemplate>
+        Sure to delete <b>{{localdata.Name}}</b>?
+      </ng-template>
     </form>
-
 </mat-dialog-content>
+
 <mat-dialog-actions>
-    <button type="submit" mat-button  (click)="doAction()">{{action}}</button>
-    <button mat-button matDialogClose>Close</button>
+  <button type="submit" mat-raised-button color="warn" (click)="doAction()">{{action}}</button>
+   <button mat-raised-button color="warn" matDialogClose>Close</button>
 </mat-dialog-actions>

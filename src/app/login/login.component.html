@@ -1,38 +1,51 @@
-<div class="Style">
-<mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="form.valid && submit()" novalidate>
-            <p>
-                <mat-form-field>
-                <input type="text" matInput placeholder="Username" formControlName="username" required >
-                <mat-error *ngIf="hasError('username', 'required')">Password is required</mat-error>
-                </mat-form-field>
-            </p>
-
-            <p>
-                <mat-form-field>
-                <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" formControlName="password" required>
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
-                <mat-error *ngIf="hasError('password', 'minlength')">Minimum lenght is 8</mat-error>
-                <mat-error *ngIf="hasError('password', 'maxlength')">Maximum lenght is 16</mat-error>
-                <mat-error *ngIf="hasError('password', 'pattern')">Special Charater is required</mat-error>
-
-                </mat-form-field>
-            </p>
-
-            <!--<p *ngIf="error" class="error">
-                {{ error }}
-            </p>-->
-
-            <div class="button">
-                <button type="submit" [disabled]="!form.valid" mat-button>Login</button>
-            </div>
-
-        </form>
-  </mat-card-content>
-</mat-card>
+<div class="login-page">
+    <mat-toolbar color="primary">
+        <span class="logo-wrapper">
+            <h1>BUTTERFLY</h1>
+        </span>
+      
+        <!-- This fills the remaining space of the current row -->
+        <span class="spacer"></span>
+      
+        <span></span>
+    </mat-toolbar>
+    <div class="mat-card-wrapper">
+        <mat-card>
+            <mat-card-title>Login</mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="form.valid && submit()" novalidate>
+                    <p>
+                        <mat-form-field>
+                        <input type="text" matInput placeholder="Username" formControlName="username" required >
+                        <mat-error *ngIf="hasError('username', 'required')">Password is required</mat-error>
+                        </mat-form-field>
+                    </p>
+    
+                    <p>
+                        <mat-form-field>
+                        <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" formControlName="password" required>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+                        <mat-error *ngIf="hasError('password', 'minlength')">Minimum lenght is 8</mat-error>
+                        <mat-error *ngIf="hasError('password', 'maxlength')">Maximum lenght is 16</mat-error>
+                        <mat-error *ngIf="hasError('password', 'pattern')">Special Charater is required</mat-error>
+    
+                        </mat-form-field>
+                    </p>
+    
+                    <!--<p *ngIf="error" class="error">
+                        {{ error }}
+                    </p>-->
+    
+                    <div class="button">
+                        <button type="submit" [disabled]="!form.valid" mat-raised-button color="primary">Login</button>
+                    </div>
+    
+                </form>
+        </mat-card-content>
+        </mat-card>
+    </div>
 </div>
+

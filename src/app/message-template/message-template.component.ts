@@ -1,8 +1,10 @@
-import { APIService } from './../api.service';
-import { DialogBoxForMessageComponent } from './../dialog-box-for-message/dialog-box-for-message.component';
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+
+import { APIService } from './../api.service';
+import { DialogBoxForMessageComponent } from './../dialog-box-for-message/dialog-box-for-message.component';
+import { UiService } from '../ui.service'
 
 export interface MessageItems {
   id: number;
@@ -26,31 +28,30 @@ const ELEMENT_DATA: MessageItems[] = [
   styleUrls: ['./message-template.component.scss']
 })
 export class MessageTemplateComponent implements OnInit {
-  resourcesLoaded = false;
-  displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'Action'];
+  displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'created_at', 'Action'];
   dataSource = ELEMENT_DATA;
   details: any;
   DATA = [];
   varID: any;
   ApiObj: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
-  constructor(private apiService: APIService, public dialog: MatDialog) { }
+
+  constructor(private apiService: APIService, public dialog: MatDialog, private uiService: UiService) { }
 
   ngOnInit() {
+    this.uiService.showSpinner();
     this.apiService.getAllMessageTemplates().subscribe(data => {
       console.log(data);
       this.details = data;
-      this.DATA = this.details;
-      this.resourcesLoaded = true;
-
+      this.uiService.stopSpinner();
     }, err => {
       console.log(err);
+      this.uiService.stopSpinner();
     });
   }
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxForMessageComponent, {
-      width: '300px',
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -63,46 +64,45 @@ export class MessageTemplateComponent implements OnInit {
       }
     });
   }
+
+  refreshTable() {
+    this.apiService.getAllMessageTemplates().subscribe(data => {
+      this.details = data;
+      this.uiService.stopSpinner();
+    }, err => {
+      console.log(err);
+      this.uiService.stopSpinner();
+    });
+  }
+
   addRowData(rowobj) {
     //this.varID = 'ajinkya';
     this.ApiObj = JSON.stringify(rowobj);
     console.log('this is JSONString' + this.ApiObj );
+    this.uiService.showSpinner();
     this.apiService.saveMessageTemplate(this.ApiObj).toPromise().then(rdata => {
-    console.log(rdata);
-    this.resourcesLoaded = false;
-    this.ngOnInit();
+      console.log(rdata);
+      this.refreshTable();
    });
   }
 
   updateRowData(rowobj) {
     this.ApiObj = JSON.stringify(rowobj);
     console.log('this is JSONString' + this.ApiObj);
+    this.uiService.showSpinner();
     this.apiService.updateMessageTemplate(this.ApiObj).toPromise().then(rdata => {
-    console.log(rdata);
-    this.ngOnInit();
+      console.log(rdata);
+      this.refreshTable();
    });
   }
   deleteRowData( rowobj ) {
     this.ApiObj = rowobj;
     console.log('this is id' + this.ApiObj);
+    this.uiService.showSpinner();
     this.apiService.deleteMessageTemplatesByCampaign(this.ApiObj).toPromise().then(rdata => {
-    console.log(rdata);
-    this.ngOnInit();
+      console.log(rdata);
+      this.refreshTable();
    });
-  }
- // openDialog(): void {
- //   this.dialog.open(DialogBoxForMessageComponent, {
- //     width: '400px',
- //   });
-
-  AddMessage() {
-    console.log('Add logic');
-  }
-  Delete() {
-    console.log('Delete logic');
-  }
-  Edit() {
-    console.log('Edit logic');
   }
 }
 

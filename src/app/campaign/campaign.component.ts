@@ -3,6 +3,7 @@ import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { APIService } from '../api.service';
+import { UiService } from '../ui.service';
 
 
 export interface CampaignItems {
@@ -26,31 +27,29 @@ const ELEMENT_DATA: CampaignItems[] = [
 })
 
 export class CampaignComponent implements OnInit {
-  resourcesLoaded = false;
-  displayedColumns: string[] = ['id', 'name', 'Action'];
+  displayedColumns: string[] = ['id', 'name', 'created_at', 'Action'];
   dataSource = ELEMENT_DATA;
   ApiObj: any;
   details: any;
-  DATA = [];
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(public dialog: MatDialog, private apiService: APIService) { }
+  constructor(public dialog: MatDialog, private apiService: APIService, private uiService: UiService) { }
 
   ngOnInit() {
+    this.uiService.showSpinner();
     this.apiService.getAllCampaigns().subscribe(data => {
       console.log(data);
+      this.uiService.stopSpinner();
       this.details = data;
-      this.DATA = this.details;
-      this.resourcesLoaded = true;
-
     }, err => {
+      this.uiService.stopSpinner();
       console.log(err);
     });
   }
+
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '300px',
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -63,45 +62,45 @@ export class CampaignComponent implements OnInit {
       }
     });
   }
+
+  refreshTable() {
+    this.apiService.getAllCampaigns().subscribe(data => {
+      this.uiService.stopSpinner();
+      this.details = data;
+    }, err => {
+      this.uiService.stopSpinner();
+      console.log(err);
+    });
+  }
+
   addRowData(rowobj) {
     this.ApiObj = JSON.stringify(rowobj);
     console.log('this is JSONString' + this.ApiObj);
+    this.uiService.showSpinner();
     this.apiService.saveCampaign(this.ApiObj).toPromise().then(rdata => {
       console.log(rdata);
-      this.resourcesLoaded = false;
-      this.ngOnInit();
+      this.refreshTable();
     });
-  //  let d = new Date();
-  //  this.dataSource.push({
-  //    id: d.getTime(),
-  //    name: rowobj.name
-  //  });
-  //  this.table.renderRows();
-
   }
 
   updateRowData(rowobj) {
     this.ApiObj = JSON.stringify(rowobj);
     console.log('this is JSONString' + this.ApiObj);
+    this.uiService.showSpinner();
     this.apiService.updateCampaign(this.ApiObj).toPromise().then(rdata => {
     console.log(rdata);
-    this.ngOnInit();
+    this.refreshTable();
    });
   }
   deleteRowData( rowobj ) {
     this.ApiObj = rowobj;
     console.log('this is id' + this.ApiObj);
+    this.uiService.showSpinner();
     this.apiService.deleteCampaign(this.ApiObj).toPromise().then(rdata => {
-    console.log(rdata);
-    this.ngOnInit();
-   });
+      console.log(rdata);
+      this.refreshTable();
+    });
   }
-
- // openDialog(): void {
- //   this.dialog.open(DialogBoxComponent, {
-  //    width: '300px',
-  //  });
-//  }
 
   AddCampaign() {
     console.log('Add logic');

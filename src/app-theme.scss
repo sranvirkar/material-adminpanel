@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$app-theme-primary: mat-palette($mat-red);
+$app-theme-accent: mat-palette($mat-pink);
+$app-theme-warn: mat-palette($mat-red);
+
+
+$customer-app-theme: mat-light-theme($app-theme-primary, $app-theme-accent, $app-theme-warn);
+
+@include angular-material-theme($customer-app-theme);

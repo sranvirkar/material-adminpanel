@@ -15,6 +15,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { MessageTemplateComponent } from './message-template/message-template.component';
 import { DialogBoxForMessageComponent } from './dialog-box-for-message/dialog-box-for-message.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { MatSpinner } from '@angular/material';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -45,8 +46,10 @@ export function tokenGetter() {
     MaterialModule,
     FormsModule
   ],
-  entryComponents: [ DialogBoxComponent,
-    DialogBoxForMessageComponent
+  entryComponents: [ 
+    DialogBoxComponent,
+    DialogBoxForMessageComponent,
+    MatSpinner
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

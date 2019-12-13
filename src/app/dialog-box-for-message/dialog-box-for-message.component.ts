@@ -64,18 +64,20 @@ export class DialogBoxForMessageComponent implements OnInit {
 
    doAction() {
     if (this.form.valid && this.action === 'Add') {
-    this.dialogRef.close({event: this.action, data: this.form.value});
+      this.dialogRef.close({event: this.action, data: this.form.value});
     }
+
     if (this.form.valid && this.action === 'Update') {
-      this.DataObj = ({"campaign_id":""+this.localdata.campaign_id+"","name":""+this.localdata.name+"","messageBody":""+this.localdata.messageBody+"","id":""+this.localdata.id+""});
-     this.dialogRef2.close({event: this.action, data: this.DataObj});
-     console.log('this is campaign name' + this.DataObj.campaignName);
-     }
+      this.DataObj = ({"campaign_id":""+this.localdata.campaign_id+"","name":""+this.localdata.name+"","messageBody":""+this.localdata.message_body+"","id":""+this.localdata.id+""});
+      this.dialogRef2.close({event: this.action, data: this.DataObj});
+      console.log('this is campaign name' + this.DataObj.campaignName);
+    }
+
     if (this.action === 'Delete') {
      this.DataObj = this.localdata.id;
      this.dialogRef2.close({event: this.action, data: this.DataObj});
      console.log('this is campaign name' + this.DataObj);
-     }
+    }
 }
 
   closeDialog() {

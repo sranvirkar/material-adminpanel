@@ -1,23 +1,26 @@
 
-@media screen and (max-width: 769px) {
+.campaign-wrapper {
+  padding: 20px;
+
+  > .top-btn-container {
+    text-align: left;
+  }
+
   table {
+    margin: 20px 0;
     width: 100%;
   }
-}
-@media screen and (min-width: 770px) {
-table {
-  width: 400px;
-}
-}
-.SmallButtons {
-  font-size: 8px;
-}
 
-.center {
-  text-align: center;
-}
-.openDbutton {
-  float: right;
-  display: block;
+  .SmallButtons {
+    font-size: 8px;
   }
+
+  .center {
+    text-align: center;
+  }
+  .openDbutton {
+    float: right;
+    display: block;
+  }
+}
 

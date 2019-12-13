@@ -1,5 +1,5 @@
 import {MediaMatcher} from '@angular/cdk/layout';
-import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import {Router} from "@angular/router"
 import { APIService } from "../api.service";
 
@@ -8,11 +8,12 @@ import { APIService } from "../api.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   title = 'admin-panel';
   mobileQuery: MediaQueryList;
   navBarOpened: boolean = true;
+  loggedInUser: any = {};
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router, private apiService: APIService) {
@@ -20,6 +21,11 @@ export class HomeComponent implements OnDestroy {
     this.navBarOpened = !this.mobileQuery.matches;
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnInit() {
+    let user = localStorage.getItem("loggedinuser");
+    this.loggedInUser = user ? JSON.parse(user): {};
   }
 
   ngOnDestroy(): void {
