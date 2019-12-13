@@ -1,3 +1,4 @@
+import { APIService } from './../api.service';
 import { Component,  Inject, OnInit, Optional } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -6,7 +7,7 @@ export interface MessageItems {
   id: number;
   name: string;
   body: string;
-  campaignName: string;
+  cId: number;
 }
 @Component({
   selector: 'app-dialog-box-for-message',
@@ -17,15 +18,17 @@ export class DialogBoxForMessageComponent implements OnInit {
   action: string;
   localdata: any;
   form: FormGroup;
-  CampaignName: string;
+  CampaignID: number;
   TemplateName: string;
   TemplateBody: string;
+  details: any;
+  DATA = [];
  // form: FormGroup = new FormGroup({
    // CampaignName: new FormControl('', [Validators.required]),
     // TemplateName: new FormControl('', [Validators.required]),
     // TemplateBody: new FormControl('', [Validators.required]),
   // });
-  constructor(private formBuilder: FormBuilder,
+  constructor(private apiService: APIService, private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogBoxForMessageComponent>,
      @Optional() @Inject(MAT_DIALOG_DATA) public data: MessageItems) {
     console.log(data);
@@ -33,8 +36,17 @@ export class DialogBoxForMessageComponent implements OnInit {
     this.action = this.localdata.action;
    }
    ngOnInit() {
+    this.apiService.getAllCampaigns().subscribe(data => {
+      console.log(data);
+      this.details = data;
+      this.DATA = this.details;
+
+    }, err => {
+      console.log(err);
+    });
+
     this.form = this.formBuilder.group({
-      campaignName: [this.CampaignName, [
+      campaignId: [this.CampaignID, [
         Validators.required
       ]], templateName: [this.TemplateName, [
         Validators.required
@@ -43,14 +55,17 @@ export class DialogBoxForMessageComponent implements OnInit {
       ]]
     });
     }
+
     public hasError = (controlName: string, errorName: string) => {
       return this.form.controls[controlName].hasError(errorName);
     }
 
    doAction() {
-    if (this.form.valid) {
-    this.dialogRef.close({event: this.action, data: this.localdata});
-    console.log('this is campaign name' + this.localdata);
+    if (this.form.valid || this.action === 'Delete') {
+    this.dialogRef.close({event: this.action, data: this.form.value});
+    console.log('this is campaign name' + this.localdata.name);
+    console.log('this is campaign name' + this.localdata.body);
+    console.log('this is campaign name' + this.localdata.cname);
   }
 }
   closeDialog() {

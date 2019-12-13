@@ -3,10 +3,8 @@
 <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
   <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate1" >
         <mat-label>Campaign Name</mat-label>
-        <mat-select required [(ngModel)]="localdata.campaignName"  formControlName="campaignName">
-          <mat-option value="Campaign1">Campaign1</mat-option>
-          <mat-option value="Campaign2">Campaign2</mat-option>
-          <mat-option value="Campaign3">Campaign3</mat-option>
+        <mat-select required [(ngModel)]="localdata.cId"  formControlName="campaignId">
+          <mat-option *ngFor="let detail of details"  [value]="detail.id">{{detail.Name}}</mat-option>
         </mat-select>
         <mat-error >Campaign Name is Required</mat-error>
   </mat-form-field>
@@ -31,6 +29,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button type="submit" mat-button mat-button [disabled]="!form.valid" (click)="doAction()">{{action}}</button>
+    <button type="submit" mat-button mat-button  (click)="doAction()">{{action}}</button>
     <button mat-button matDialogClose>Close</button>
 </mat-dialog-actions>

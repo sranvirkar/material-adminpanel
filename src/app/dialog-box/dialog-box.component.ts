@@ -40,8 +40,8 @@ export class DialogBoxComponent implements OnInit {
     }
 
    doAction() {
-    if (this.form.valid) {
-    this.dialogRef.close({event: this.action, data: this.localdata});
+    if (this.form.valid || this.action === 'Delete') {
+    this.dialogRef.close({event: this.action, data: this.form.value});
     console.log('this is campaign name' + this.localdata);
     }
 }

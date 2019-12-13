@@ -6,12 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class APIService {
 
-  apiBase: string = "https://sms-send-activity.herokuapp.com/admin-panel";
+  apiBase: string = 'https://sms-send-activity.herokuapp.com/admin-panel';
 
   constructor(private httpClient: HttpClient) { }
 
-  public authenticateUser(username: string, password: string){
-    return this.httpClient.post(`${this.apiBase}/api/authUser`, {username:username, pass:password});
+  public authenticateUser(username: string, password: string) {
+    return this.httpClient.post(`${this.apiBase}/api/authUser`, { username:username, pass: password});
   }
 
   public isLoggedIn(){
@@ -20,10 +20,10 @@ export class APIService {
 
   public logout() {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('loggedinuser');    
+    localStorage.removeItem('loggedinuser');
   }
 
-  public getAllCampaigns(){
+  public getAllCampaigns() {
     return this.httpClient.get(`${this.apiBase}/api/getAllCampaigns`);
   }
 
@@ -39,8 +39,8 @@ export class APIService {
     return this.httpClient.get(`${this.apiBase}/api/getAllMessageTemplatesByCampaign/${campaignId}`);
   }
 
-  public saveCampaign(campaignObj: any){
-    //campaignObj = {campaignName:"name of the campaign"}
+  public saveCampaign(campaignObj: any) {
+    //campaignObj = {campaignName: campaignObj.name };
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -49,7 +49,7 @@ export class APIService {
     return this.httpClient.post(`${this.apiBase}/api/campaign/new`, campaignObj, httpOptions);
   }
 
-  public saveMessageTemplate(messagetemplateObj: any){
+  public saveMessageTemplate(messagetemplateObj: any) {
     //messagetemplateObj = {campaign_id:"campaign_id", name: "message template name", messageBody: "message template body"}
     const httpOptions = {
       headers: new HttpHeaders({

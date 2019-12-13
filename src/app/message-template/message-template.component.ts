@@ -1,3 +1,4 @@
+import { APIService } from './../api.service';
 import { DialogBoxForMessageComponent } from './../dialog-box-for-message/dialog-box-for-message.component';
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
@@ -7,15 +8,15 @@ export interface MessageItems {
   id: number;
   name: string;
   body: string;
-  campaignName: string;
+  campaignId: number;
 }
 
 const ELEMENT_DATA: MessageItems[] = [
-  {id: 1, name: 'Message1', body: 'Example1', campaignName: ''},
-  {id: 2, name: 'Message2', body: 'Example2', campaignName: ''},
-  {id: 3, name: 'Message3', body: 'Example3', campaignName: ''},
-  {id: 4, name: 'Message4', body: 'Example4', campaignName: ''},
-  {id: 5, name: 'Message5', body: 'Example5', campaignName: ''}
+ // {id: 1, name: 'Message1', body: 'Example1', campaignId: },
+ // {id: 2, name: 'Message2', body: 'Example2', campaignId: },
+ // {id: 3, name: 'Message3', body: 'Example3', campaignId: },
+ // {id: 4, name: 'Message4', body: 'Example4', campaignId: },
+ // {id: 5, name: 'Message5', body: 'Example5', campaignId: }
 ];
 
 
@@ -25,13 +26,25 @@ const ELEMENT_DATA: MessageItems[] = [
   styleUrls: ['./message-template.component.scss']
 })
 export class MessageTemplateComponent implements OnInit {
-  resourcesLoaded = true;
+  resourcesLoaded = false;
   displayedColumns: string[] = ['id', 'name', 'body', 'campaignName', 'Action'];
   dataSource = ELEMENT_DATA;
+  details: any;
+  DATA = [];
+  ApiObj: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
-  constructor(public dialog: MatDialog) { }
+  constructor(private apiService: APIService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.apiService.getAllMessageTemplates().subscribe(data => {
+      console.log(data);
+      this.details = data;
+      this.DATA = this.details;
+      this.resourcesLoaded = true;
+
+    }, err => {
+      console.log(err);
+    });
   }
   openDialog(action, obj) {
     obj.action = action;
@@ -50,23 +63,21 @@ export class MessageTemplateComponent implements OnInit {
     });
   }
   addRowData(rowobj) {
-    let d = new Date();
-    this.dataSource.push({
-      id: d.getTime(),
-      name: rowobj.name,
-      body: rowobj.body,
-      campaignName: rowobj.campaignName,
-
-
+    this.ApiObj = JSON.stringify(rowobj);
+    console.log('this is JSONString' + this.ApiObj);
+    this.apiService.saveMessageTemplate(this.ApiObj).toPromise().then(rdata => {
+      console.log(rdata);
+      this.resourcesLoaded = false;
+      this.ngOnInit();
     });
-    this.table.renderRows();
-
   }
 
   updateRowData(rowobj) {
     this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowobj.id) {
         value.name = rowobj.name;
+        value.body = rowobj.body;
+        value.campaignId = rowobj.cId;
       }
       return true;
     });

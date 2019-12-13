@@ -2,7 +2,7 @@ import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { APIService } from '../api.service'; 
+import { APIService } from '../api.service';
 
 
 export interface CampaignItems {
@@ -26,9 +26,12 @@ const ELEMENT_DATA: CampaignItems[] = [
 })
 
 export class CampaignComponent implements OnInit {
-  resourcesLoaded = true;
+  resourcesLoaded = false;
   displayedColumns: string[] = ['id', 'name', 'Action'];
   dataSource = ELEMENT_DATA;
+  ApiObj: any;
+  details: any;
+  DATA = [];
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   constructor(public dialog: MatDialog, private apiService: APIService) { }
@@ -36,6 +39,10 @@ export class CampaignComponent implements OnInit {
   ngOnInit() {
     this.apiService.getAllCampaigns().subscribe(data => {
       console.log(data);
+      this.details = data;
+      this.DATA = this.details;
+      this.resourcesLoaded = true;
+
     }, err => {
       console.log(err);
     });
@@ -57,22 +64,29 @@ export class CampaignComponent implements OnInit {
     });
   }
   addRowData(rowobj) {
-    let d = new Date();
-    this.dataSource.push({
-      id: d.getTime(),
-      name: rowobj.name
+    this.ApiObj = JSON.stringify(rowobj);
+    console.log('this is JSONString' + this.ApiObj);
+    this.apiService.saveCampaign(this.ApiObj).toPromise().then(rdata => {
+      console.log(rdata);
+      this.resourcesLoaded = false;
+      this.ngOnInit();
     });
-    this.table.renderRows();
+  //  let d = new Date();
+  //  this.dataSource.push({
+  //    id: d.getTime(),
+  //    name: rowobj.name
+  //  });
+  //  this.table.renderRows();
 
   }
 
   updateRowData(rowobj) {
-    this.dataSource = this.dataSource.filter((value, key) => {
-      if (value.id === rowobj.id) {
-        value.name = rowobj.name;
-      }
-      return true;
-    });
+    //this.ApiObj = JSON.stringify(rowobj);
+   // console.log('this is JSONString' + this.ApiObj);
+   // this.apiService.editCampaign(this.ApiObj).toPromise().then(rdata => {
+   //   console.log(rdata);
+    //  this.ngOnInit();
+   // });
   }
   deleteRowData( rowobj ) {
     this.dataSource = this.dataSource.filter((value, key) => {
