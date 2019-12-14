@@ -13,9 +13,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { MessageTemplateComponent } from './message-template/message-template.component';
-import { DialogBoxForMessageComponent } from './dialog-box-for-message/dialog-box-for-message.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { MatSpinner } from '@angular/material';
+import { MessageBoxComponent } from './message-box/message-box.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -29,7 +29,7 @@ export function tokenGetter() {
     CampaignComponent,
     MessageTemplateComponent,
     DialogBoxComponent,
-    DialogBoxForMessageComponent
+    MessageBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +48,7 @@ export function tokenGetter() {
   ],
   entryComponents: [ 
     DialogBoxComponent,
-    DialogBoxForMessageComponent,
+    MessageBoxComponent,
     MatSpinner
   ],
   providers: [{

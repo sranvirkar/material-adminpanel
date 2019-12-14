@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { OverlayRef, Overlay } from '@angular/cdk/overlay';
 import { MatSpinner } from '@angular/material';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +9,8 @@ import { Subject } from 'rxjs';
 export class UiService {
 
   private spinnerRef: OverlayRef = this.cdkSpinnerCreate();
-  spin$ :Subject<boolean> = new Subject();
 
-  constructor(private overlay: Overlay) { 
-
-  }
+  constructor(private overlay: Overlay) { }
 
   private cdkSpinnerCreate() {
     return this.overlay.create({
@@ -25,8 +21,8 @@ export class UiService {
         .centerHorizontally()
         .centerVertically()
     })
- }
- showSpinner() {
+  }
+  showSpinner() {
     this.spinnerRef.attach(new ComponentPortal(MatSpinner))
   }
   stopSpinner() {

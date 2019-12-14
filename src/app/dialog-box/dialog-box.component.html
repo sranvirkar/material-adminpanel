@@ -1,18 +1,42 @@
-<h2 matDialogTitle>Add Campaign</h2>
+<h2 matDialogTitle>{{localdata.action}} {{localdata.type}}</h2>
 
-<mat-dialog-content>
-    <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
-      <mat-form-field color="warn" *ngIf="action != 'Delete'; else elseTemplate">
-        <input matInput placeholder="{{action}} Campaign Name" [(ngModel)]="localdata.Name" formControlName="campaignName" required>
-        <mat-error *ngIf="hasError('campaignName', 'required')">Campaign Name is required</mat-error>
+<mat-dialog-content>    
+  <form [formGroup]="form" (ngSubmit)="form.valid && doAction()" novalidate>
+    
+    <div *ngIf="localdata.type === 'Campaign'">
+      <mat-form-field color="warn" *ngIf="localdata.action !== 'Delete'; else elseTemplate">
+        <input matInput placeholder="Campaign Name" [(ngModel)]="localdata.name" formControlName="name" required>
+        <mat-error *ngIf="hasError('name', 'required')">Campaign name is required</mat-error>
       </mat-form-field>
-      <ng-template #elseTemplate>
-        Sure to delete <b>{{localdata.Name}}</b>?
-      </ng-template>
-    </form>
+    </div>   
+    
+    <div *ngIf="localdata.type === 'Message'">
+      <div *ngIf="localdata.action !== 'Delete'; else elseTemplate">
+        <mat-form-field color="warn">
+          <mat-label>Campaign Name</mat-label>
+          <mat-select required [(ngModel)]="localdata.campaign_id" formControlName="campaign_id">
+            <mat-option *ngFor="let detail of localdata.campaignList"  [value]="detail.id">{{detail.name}}</mat-option>
+          </mat-select>
+          <mat-error >Campaign Name is Required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="warn">
+          <input matInput placeholder="Template Name" required [(ngModel)]="localdata.name" formControlName="name">
+          <mat-error >Template Name is Required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="warn">
+          <textarea matInput placeholder="Template Body" required [(ngModel)]="localdata.message_body" formControlName="message_body"></textarea>
+          <mat-error >Template Body is Required</mat-error>
+        </mat-form-field>
+      </div>      
+    </div>  
+
+    <ng-template #elseTemplate>
+      Are you sure you want to delete <b>{{localdata.Name}}</b> {{localdata.type}}?
+    </ng-template>
+  </form>  
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button type="submit" mat-raised-button color="warn" (click)="doAction()">{{action}}</button>
-   <button mat-raised-button color="warn" matDialogClose>Close</button>
+  <button type="submit" mat-raised-button color="warn" (click)="doAction()">{{localdata.action}}</button>
+  <button mat-raised-button color="warn" matDialogClose>Close</button>
 </mat-dialog-actions>

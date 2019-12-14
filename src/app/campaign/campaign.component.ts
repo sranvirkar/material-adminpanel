@@ -1,24 +1,9 @@
-import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { Component, OnInit , ViewChild } from '@angular/core';
-import { MatTable } from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatTable, MatDialog } from '@angular/material';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { APIService } from '../api.service';
 import { UiService } from '../ui.service';
-
-
-export interface CampaignItems {
-  id: number;
-  name: string;
-}
-
-const ELEMENT_DATA: CampaignItems[] = [
-  {id: 1, name: 'Campaign1'},
-  {id: 2, name: 'Campaign2'},
-  {id: 3, name: 'Campaign3'},
-  {id: 4, name: 'Campaign4'},
-  {id: 5, name: 'Campaign5'}
-];
-
+import { MessageBoxComponent } from '../message-box/message-box.component'
 
 @Component({
   selector: 'app-campaign',
@@ -28,7 +13,6 @@ const ELEMENT_DATA: CampaignItems[] = [
 
 export class CampaignComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'created_at', 'Action'];
-  dataSource = ELEMENT_DATA;
   ApiObj: any;
   details: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
@@ -48,9 +32,14 @@ export class CampaignComponent implements OnInit {
   }
 
   openDialog(action, obj) {
-    obj.action = action;
+    const data = {
+      type: "Campaign",
+      action: action,
+      ...obj
+    };
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      data: obj
+      data: data,
+      minWidth: "315px"
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.event === 'Add') {
@@ -60,6 +49,17 @@ export class CampaignComponent implements OnInit {
       } else if (result.event === 'Delete') {
         this.deleteRowData(result.data);
       }
+    });
+  }
+
+  openAlertBox(message, type){
+    const messageBoxRef = this.dialog.open(MessageBoxComponent, {
+      data: {message, type},
+      minWidth: '300px',
+      maxWidth: '400px'
+    });
+    messageBoxRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 
@@ -73,9 +73,11 @@ export class CampaignComponent implements OnInit {
     });
   }
 
-  addRowData(rowobj) {
-    this.ApiObj = JSON.stringify(rowobj);
-    console.log('this is JSONString' + this.ApiObj);
+  addRowData(rowobj) {    
+    const data = {
+      campaignName: rowobj.name
+    };
+    console.log(data);
     this.uiService.showSpinner();
     this.apiService.saveCampaign(this.ApiObj).toPromise().then(rdata => {
       console.log(rdata);
@@ -84,31 +86,32 @@ export class CampaignComponent implements OnInit {
   }
 
   updateRowData(rowobj) {
-    this.ApiObj = JSON.stringify(rowobj);
-    console.log('this is JSONString' + this.ApiObj);
+    const data = {
+      campaignName: rowobj.name,
+      id: rowobj.id
+    };
+    console.log(data);
     this.uiService.showSpinner();
-    this.apiService.updateCampaign(this.ApiObj).toPromise().then(rdata => {
-    console.log(rdata);
-    this.refreshTable();
-   });
-  }
-  deleteRowData( rowobj ) {
-    this.ApiObj = rowobj;
-    console.log('this is id' + this.ApiObj);
-    this.uiService.showSpinner();
-    this.apiService.deleteCampaign(this.ApiObj).toPromise().then(rdata => {
+    this.apiService.updateCampaign(JSON.stringify(data)).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
+    }).catch(err => {
+      console.log(err);
     });
   }
 
-  AddCampaign() {
-    console.log('Add logic');
-  }
-  Delete() {
-    console.log('Del logic');
-  }
-  Edit() {
-    console.log('Edit logic');
+  deleteRowData(rowobj) {
+    console.log(rowobj);
+    this.uiService.showSpinner();
+    this.apiService.deleteCampaign(rowobj.id).toPromise().then(rdata => {
+      console.log(rdata);
+      this.refreshTable();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.stopSpinner();
+      if(err.error && err.error.code === "23503"){
+        this.openAlertBox("Unable to delete this Campaign. As some of message templates are associated with it.", "Error");
+      }      
+    });
   }
 }
