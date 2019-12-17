@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -66,7 +67,7 @@ export class APIService {
         'Content-Type':  'application/json'
       })
     };
-    return this.httpClient.post(`${this.apiBase}/api/campaign/update`, campaignObj, httpOptions);
+    return this.httpClient.post(`${this.apiBase}/api/campaign/updates`, campaignObj, httpOptions);
   }
   public updateMessageTemplate(messagetemplateObj: any) {
     console.log('this is obj at save message function ' + messagetemplateObj );
@@ -84,4 +85,6 @@ export class APIService {
   public deleteMessageTemplatesByCampaign(Id: any){
     return this.httpClient.get(`${this.apiBase}/api/messagetemplate/delete/${Id}`);
   }
+
+
 }

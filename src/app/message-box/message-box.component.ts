@@ -11,8 +11,9 @@ export class MessageBoxComponent implements OnInit {
   localdata: any;
 
   constructor( public dialogRef: MatDialogRef<MessageBoxComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
       this.localdata = data;
+      console.log( this.localdata);
     }
 
   ngOnInit() {

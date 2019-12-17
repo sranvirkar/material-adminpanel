@@ -2,7 +2,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { MessageTemplateComponent } from './message-template/message-template.co
 import { AuthInterceptor } from './auth-interceptor';
 import { MatSpinner } from '@angular/material';
 import { MessageBoxComponent } from './message-box/message-box.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -44,9 +45,9 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
   ],
-  entryComponents: [ 
+  entryComponents: [
     DialogBoxComponent,
     MessageBoxComponent,
     MatSpinner

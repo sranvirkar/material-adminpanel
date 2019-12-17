@@ -24,7 +24,7 @@ export class DialogBoxComponent implements OnInit {
       this.localdata = {...data};
    }
 
-   ngOnInit() {      
+   ngOnInit() {
       const fieldsToValidate = this.getFieldsForValidation(this.localdata.type);
       this.form = this.formBuilder.group(fieldsToValidate);
     }
@@ -60,7 +60,7 @@ export class DialogBoxComponent implements OnInit {
       return this.form.controls[controlName].hasError(errorName);
     }
 
-   doAction() {
+   submit() {
     if (this.form.valid) {
       switch(this.localdata.action) {
         case 'Add':
@@ -70,7 +70,7 @@ export class DialogBoxComponent implements OnInit {
           this.dialogRef.close({event: this.localdata.action, data: this.localdata});
           break;
       }
-    }    
+    }
     if(this.localdata.action === "Delete"){
       this.dialogRef.close({event: this.localdata.action, data: this.localdata});
     }

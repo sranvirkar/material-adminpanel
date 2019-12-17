@@ -23,7 +23,7 @@ export class UiService {
     })
   }
   showSpinner() {
-    this.spinnerRef.attach(new ComponentPortal(MatSpinner))
+    this.spinnerRef.attach(new ComponentPortal(MatSpinner));
   }
   stopSpinner() {
     this.spinnerRef.detach();

@@ -1,9 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { MatTable, MatDialog } from '@angular/material';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { APIService } from '../api.service';
 import { UiService } from '../ui.service';
-import { MessageBoxComponent } from '../message-box/message-box.component'
+import { MessageBoxComponent } from '../message-box/message-box.component';
+
 
 @Component({
   selector: 'app-campaign',
@@ -28,6 +30,7 @@ export class CampaignComponent implements OnInit {
     }, err => {
       this.uiService.stopSpinner();
       console.log(err);
+      this.errorHandling(err);
     });
   }
 
@@ -70,10 +73,11 @@ export class CampaignComponent implements OnInit {
     }, err => {
       this.uiService.stopSpinner();
       console.log(err);
+      this.errorHandling(err);
     });
   }
 
-  addRowData(rowobj) {    
+  addRowData(rowobj) {
     const data = {
       campaignName: rowobj.name
     };
@@ -82,6 +86,11 @@ export class CampaignComponent implements OnInit {
     this.apiService.saveCampaign(this.ApiObj).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
+    })
+    .catch(err => {
+      this.uiService.stopSpinner();
+      console.log(err);
+      this.errorHandling(err);
     });
   }
 
@@ -96,7 +105,9 @@ export class CampaignComponent implements OnInit {
       console.log(rdata);
       this.refreshTable();
     }).catch(err => {
+      this.uiService.stopSpinner();
       console.log(err);
+      this.errorHandling(err);
     });
   }
 
@@ -111,7 +122,17 @@ export class CampaignComponent implements OnInit {
       this.uiService.stopSpinner();
       if(err.error && err.error.code === "23503"){
         this.openAlertBox("Unable to delete this Campaign. As some of message templates are associated with it.", "Error");
-      }      
+      }
+      else {
+        this.openAlertBox('Sorry for inconvenience. Please try again later', 'Server Error !!! ');
+      }
     });
+  }
+  errorHandling(error) {
+    if(error instanceof HttpErrorResponse && error.status !== 0) {
+      this.openAlertBox('Sorry for inconvenience. Please try again later', 'Server Error !!! ');
+    } else {
+      this.openAlertBox('Sorry for inconvenience. Please try again later', 'Network Error !!! ');
+    }
   }
 }

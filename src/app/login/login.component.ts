@@ -1,3 +1,4 @@
+import { MessageBoxComponent } from './../message-box/message-box.component';
 import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { EventEmitter } from 'events';
@@ -5,6 +6,9 @@ import {Router} from '@angular/router';
 import { APIService } from '../api.service';
 import { UiService } from '../ui.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatTable, MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -18,7 +22,7 @@ export class LoginComponent implements OnInit {
   @Output() submitEM = new EventEmitter();
   form: FormGroup;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private apiService: APIService, private uiService: UiService, private _snackBar: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder, private apiService: APIService, private uiService: UiService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -42,6 +46,16 @@ export class LoginComponent implements OnInit {
   public hasError = (controlName: string, errorName: string) => {
     return this.form.controls[controlName].hasError(errorName);
   }
+  openAlertBox(message, type){
+    const messageBoxRef = this.dialog.open(MessageBoxComponent, {
+      data: {message, type},
+      minWidth: '300px',
+      maxWidth: '400px'
+    });
+    messageBoxRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
 
   submit() {
     if (this.form.valid) {
@@ -57,15 +71,24 @@ export class LoginComponent implements OnInit {
         }else{
           console.log(data);
           this.uiService.stopSpinner();
-          this._snackBar.open('Username or Password is incorrect.', '', {
-            duration: 3000,
-            panelClass: ['warn-snackbar']
-          });
+          this.openAlertBox('Username or Password is incorrect.' , 'Error');
+         // this._snackBar.open('Username or Password is incorrect.', '', {
+          //  duration: 3000,
+          //  panelClass: ['warn-snackbar']
+         // });
         }
-      }, (err)=> {
+      }, (err) => {
         console.log(err);
         this.uiService.stopSpinner();
+        this.errorHandling(err);
       });
+    }
+  }
+  errorHandling(error) {
+    if(error instanceof HttpErrorResponse && error.status !== 0) {
+      this.openAlertBox('Sorry for inconvenience. Please try again later', 'Server Error !!! ');
+    } else {
+      this.openAlertBox('Sorry for inconvenience. Please try again later', 'Network Error !!! ');
     }
   }
 }

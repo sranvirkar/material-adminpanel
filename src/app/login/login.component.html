@@ -3,10 +3,10 @@
         <span class="logo-wrapper">
             <h1>BUTTERFLY</h1>
         </span>
-      
+
         <!-- This fills the remaining space of the current row -->
         <span class="spacer"></span>
-      
+
         <span></span>
     </mat-toolbar>
     <div class="mat-card-wrapper">
@@ -17,10 +17,10 @@
                     <p>
                         <mat-form-field>
                         <input type="text" matInput placeholder="Username" formControlName="username" required >
-                        <mat-error *ngIf="hasError('username', 'required')">Password is required</mat-error>
+                        <mat-error *ngIf="hasError('username', 'required')">Username is required</mat-error>
                         </mat-form-field>
                     </p>
-    
+
                     <p>
                         <mat-form-field>
                         <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" formControlName="password" required>
@@ -31,18 +31,18 @@
                         <mat-error *ngIf="hasError('password', 'minlength')">Minimum lenght is 8</mat-error>
                         <mat-error *ngIf="hasError('password', 'maxlength')">Maximum lenght is 16</mat-error>
                         <mat-error *ngIf="hasError('password', 'pattern')">Special Charater is required</mat-error>
-    
+
                         </mat-form-field>
                     </p>
-    
+
                     <!--<p *ngIf="error" class="error">
                         {{ error }}
                     </p>-->
-    
+
                     <div class="button">
                         <button type="submit" [disabled]="!form.valid" mat-raised-button color="primary">Login</button>
                     </div>
-    
+
                 </form>
         </mat-card-content>
         </mat-card>

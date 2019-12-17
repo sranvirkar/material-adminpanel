@@ -10,9 +10,9 @@ import { MessageTemplateComponent } from "./message-template/message-template.co
 const routes: Routes = [
  { path: 'login', component: LoginComponent },
  { path: '', redirectTo: '/login', pathMatch: 'full'},
- { 
-   path: 'home', 
-   component: HomeComponent,   
+ {
+   path: 'home',
+   component: HomeComponent,
    children: [
       {path: '', redirectTo: 'campaign', pathMatch: 'full'},
       {path: 'campaign', component: CampaignComponent},
