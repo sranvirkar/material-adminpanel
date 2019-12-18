@@ -1,7 +1,7 @@
 <h2 matDialogTitle>{{localdata.action}} {{localdata.type}}</h2>
 
 
-  <form [formGroup]="form" (ngSubmit)="form.valid && submit()" novalidate>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
     <mat-dialog-content>
     <div *ngIf="localdata.type === 'Campaign'">
       <mat-form-field color="warn" *ngIf="localdata.action !== 'Delete'; else elseTemplate">

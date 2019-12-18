@@ -18,6 +18,7 @@ export class CampaignComponent implements OnInit {
   ApiObj: any;
   details: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+  SuccessMsg: string = 'Success Message';
 
   constructor(public dialog: MatDialog, private apiService: APIService, private uiService: UiService) { }
 
@@ -83,9 +84,10 @@ export class CampaignComponent implements OnInit {
     };
     console.log(data);
     this.uiService.showSpinner();
-    this.apiService.saveCampaign(this.ApiObj).toPromise().then(rdata => {
+    this.apiService.saveCampaign(data).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
+      this.openAlertBox('Campaign is Successfully Added', this.SuccessMsg);
     })
     .catch(err => {
       this.uiService.stopSpinner();
@@ -104,6 +106,7 @@ export class CampaignComponent implements OnInit {
     this.apiService.updateCampaign(JSON.stringify(data)).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
+      this.openAlertBox('Campaign is Successfully Updated', this.SuccessMsg);
     }).catch(err => {
       this.uiService.stopSpinner();
       console.log(err);
@@ -117,6 +120,7 @@ export class CampaignComponent implements OnInit {
     this.apiService.deleteCampaign(rowobj.id).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
+      this.openAlertBox('Campaign is Successfully Deleted', this.SuccessMsg);
     }).catch(err => {
       console.log(err);
       this.uiService.stopSpinner();
