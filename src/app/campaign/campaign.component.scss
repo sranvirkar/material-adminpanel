@@ -6,8 +6,20 @@
     text-align: left;
   }
 
+  .top-action-cont{
+    display: flex;
+    align-items: flex-end;
+
+    > div:first-child {
+      padding-bottom: 20px;
+    }
+
+    > div:last-child {
+      margin-left: auto;
+    }
+  }
+
   table {
-    margin: 20px 0;
     width: 100%;
   }
 

@@ -7,7 +7,18 @@
 
   table {
     width: 100%;
-    margin: 20px 0;
+  }
+  .top-action-cont{
+    display: flex;
+    align-items: flex-end;
+
+    > div:first-child {
+      padding-bottom: 20px;
+    }
+
+    > div:last-child {
+      margin-left: auto;
+    }
   }
   .SmallButtons {
     font-size: 12px;

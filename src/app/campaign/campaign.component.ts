@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit , ViewChild } from '@angular/core';
-import { MatTable, MatDialog } from '@angular/material';
+import { MatTable, MatDialog, MatTableDataSource } from '@angular/material';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { APIService } from '../api.service';
 import { UiService } from '../ui.service';
@@ -25,14 +25,19 @@ export class CampaignComponent implements OnInit {
   ngOnInit() {
     this.uiService.showSpinner();
     this.apiService.getAllCampaigns().subscribe(data => {
-      console.log(data);
+      const dataSource: any = data || [];
+      console.log(dataSource);
       this.uiService.stopSpinner();
-      this.details = data;
+      this.details = new MatTableDataSource(dataSource);
     }, err => {
       this.uiService.stopSpinner();
       console.log(err);
       this.errorHandling(err);
     });
+  }
+
+  applyFilter(filteValue: string){
+    this.details.filter = filteValue.trim().toLowerCase();
   }
 
   openDialog(action, obj) {

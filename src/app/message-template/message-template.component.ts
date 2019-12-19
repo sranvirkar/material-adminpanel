@@ -1,8 +1,7 @@
 import { MessageBoxComponent } from './../message-box/message-box.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit , ViewChild } from '@angular/core';
-import { MatTable } from '@angular/material';
-import { MatDialog } from '@angular/material/dialog';
+import { MatTable, MatDialog, MatTableDataSource } from '@angular/material';
 import { APIService } from './../api.service';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component'
 import { UiService } from '../ui.service';
@@ -28,13 +27,18 @@ export class MessageTemplateComponent implements OnInit {
     this.uiService.showSpinner();
     this.apiService.getAllMessageTemplates().subscribe(data => {
       console.log(data);
-      this.details = data;
+      const dataSource : any = data || [];
+      this.details = new MatTableDataSource(dataSource);
       this.getAllCampainList();
     }, err => {
       console.log(err);
       this.uiService.stopSpinner();
       this.errorHandling(err);
     });
+  }
+
+  applyFilter(filterValue: string){
+    this.details.filter = filterValue.trim().toLowerCase();
   }
 
   getAllCampainList() {
