@@ -67,10 +67,9 @@ export class APIService {
         'Content-Type':  'application/json'
       })
     };
-    return this.httpClient.post(`${this.apiBase}/api/campaign/updates`, campaignObj, httpOptions);
+    return this.httpClient.post(`${this.apiBase}/api/campaign/update`, campaignObj, httpOptions);
   }
   public updateMessageTemplate(messagetemplateObj: any) {
-    console.log('this is obj at save message function ' + messagetemplateObj );
     //messagetemplateObj = {campaign_id:"campaign_id", name: "message template name", messageBody: "message template body"}
     const httpOptions = {
       headers: new HttpHeaders({

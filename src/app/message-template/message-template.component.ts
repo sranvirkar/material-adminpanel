@@ -105,7 +105,7 @@ export class MessageTemplateComponent implements OnInit {
     this.apiService.saveMessageTemplate(JSON.stringify(data)).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
-      this.openAlertBox('Campaign is Successfully Added', this.SuccessMsg);
+      this.openAlertBox('Message is Successfully Added', this.SuccessMsg);
    }).catch(err => {
     this.uiService.stopSpinner();
     console.log(err);
@@ -125,7 +125,7 @@ export class MessageTemplateComponent implements OnInit {
     this.apiService.updateMessageTemplate(JSON.stringify(data)).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
-      this.openAlertBox('Campaign is Successfully Updated', this.SuccessMsg);
+      this.openAlertBox('Message is Successfully Updated', this.SuccessMsg);
    }).catch(err => {
     this.uiService.stopSpinner();
     console.log(err);
@@ -138,7 +138,7 @@ export class MessageTemplateComponent implements OnInit {
     this.apiService.deleteMessageTemplatesByCampaign(rowobj.id).toPromise().then(rdata => {
       console.log(rdata);
       this.refreshTable();
-      this.openAlertBox('Campaign is Successfully Deleted', this.SuccessMsg);
+      this.openAlertBox('Message is Successfully Deleted', this.SuccessMsg);
    }).catch(err => {
     this.uiService.stopSpinner();
     console.log(err);
