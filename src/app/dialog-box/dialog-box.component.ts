@@ -1,6 +1,7 @@
-import { Component,  Inject, OnInit, Optional } from '@angular/core';
+import { Component,  Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-dialog-box',
@@ -16,6 +17,8 @@ export class DialogBoxComponent implements OnInit {
   TemplateBody: string;
   TemplateName: string;
   DataObj: any;
+
+  @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
 
   constructor(private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogBoxComponent>,

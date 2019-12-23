@@ -23,18 +23,10 @@ export class MessageTemplateComponent implements OnInit {
 
   constructor(private apiService: APIService, public dialog: MatDialog, private uiService: UiService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.uiService.showSpinner();
-    this.apiService.getAllMessageTemplates().subscribe(data => {
-      console.log(data);
-      const dataSource : any = data || [];
-      this.details = new MatTableDataSource(dataSource);
-      this.getAllCampainList();
-    }, err => {
-      console.log(err);
-      this.uiService.stopSpinner();
-      this.errorHandling(err);
-    });
+	  await this.refreshTable();
+	  this.getAllCampainList();
   }
 
   applyFilter(filterValue: string){
@@ -84,14 +76,19 @@ export class MessageTemplateComponent implements OnInit {
   }
 
   refreshTable() {
-    this.apiService.getAllMessageTemplates().subscribe(data => {
-      this.details = data;
-      this.uiService.stopSpinner();
-    }, err => {
-      console.log(err);
-      this.uiService.stopSpinner();
-      this.errorHandling(err);
-    });
+    return new Promise((resolve, reject)=>{
+      this.apiService.getAllMessageTemplates().subscribe(data => {
+        const dataSource : any = data || [];
+        this.details = new MatTableDataSource(dataSource);
+        this.uiService.stopSpinner();
+        resolve(true);
+      }, err => {
+        console.log(err);
+        this.uiService.stopSpinner();
+        this.errorHandling(err);
+        reject(err);
+      });
+    });    
   }
 
   addRowData(rowobj) {
@@ -123,14 +120,14 @@ export class MessageTemplateComponent implements OnInit {
     console.log(data);
     this.uiService.showSpinner();
     this.apiService.updateMessageTemplate(JSON.stringify(data)).toPromise().then(rdata => {
-      console.log(rdata);
-      this.refreshTable();
-      this.openAlertBox('Message is Successfully Updated', this.SuccessMsg);
-   }).catch(err => {
-    this.uiService.stopSpinner();
-    console.log(err);
-    this.errorHandling(err);
-  });
+        console.log(rdata);
+        this.refreshTable();
+        this.openAlertBox('Message is Successfully Updated', this.SuccessMsg);
+    }).catch(err => {
+      this.uiService.stopSpinner();
+      console.log(err);
+      this.errorHandling(err);
+    });
   }
 
   deleteRowData(rowobj) {

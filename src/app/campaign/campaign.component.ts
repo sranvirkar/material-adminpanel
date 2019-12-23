@@ -24,16 +24,7 @@ export class CampaignComponent implements OnInit {
 
   ngOnInit() {
     this.uiService.showSpinner();
-    this.apiService.getAllCampaigns().subscribe(data => {
-      const dataSource: any = data || [];
-      console.log(dataSource);
-      this.uiService.stopSpinner();
-      this.details = new MatTableDataSource(dataSource);
-    }, err => {
-      this.uiService.stopSpinner();
-      console.log(err);
-      this.errorHandling(err);
-    });
+	this.refreshTable();
   }
 
   applyFilter(filteValue: string){
@@ -73,9 +64,10 @@ export class CampaignComponent implements OnInit {
   }
 
   refreshTable() {
-    this.apiService.getAllCampaigns().subscribe(data => {
-      this.uiService.stopSpinner();
-      this.details = data;
+    this.apiService.getAllCampaigns().subscribe(data => {      
+	  const dataSource: any = data || [];
+      this.details = new MatTableDataSource(dataSource);
+	  this.uiService.stopSpinner();
     }, err => {
       this.uiService.stopSpinner();
       console.log(err);

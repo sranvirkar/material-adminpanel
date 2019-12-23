@@ -24,7 +24,15 @@
           <mat-error  *ngIf="hasError('name', 'required')">Template Name is Required</mat-error>
         </mat-form-field>
         <mat-form-field color="warn">
-          <textarea matInput placeholder="Template Body" required [(ngModel)]="localdata.message_body" formControlName="message_body" required></textarea>
+          <textarea matInput 
+                    cdkTextareaAutosize 
+                    cdkAutosizeMinRows="2" 
+                    cdkAutosizeMaxRows="10" 
+                    #autosize="cdkTextareaAutosize" 
+                    placeholder="Template Body" 
+                    [(ngModel)]="localdata.message_body" 
+                    formControlName="message_body" 
+                    required></textarea>
           <mat-error  *ngIf="hasError('message_body', 'required')">Template Body is Required</mat-error>
         </mat-form-field>
       </div>
