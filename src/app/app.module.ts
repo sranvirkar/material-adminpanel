@@ -16,6 +16,8 @@ import { MessageTemplateComponent } from './message-template/message-template.co
 import { AuthInterceptor } from './auth-interceptor';
 import { MatSpinner } from '@angular/material';
 import { MessageBoxComponent } from './message-box/message-box.component';
+import { UserComponent } from './user/user.component';
+
 
 
 export function tokenGetter() {
@@ -30,7 +32,8 @@ export function tokenGetter() {
     CampaignComponent,
     MessageTemplateComponent,
     DialogBoxComponent,
-    MessageBoxComponent
+    MessageBoxComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

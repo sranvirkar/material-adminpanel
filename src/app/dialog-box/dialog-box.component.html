@@ -3,6 +3,35 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
     <mat-dialog-content>
+      <div *ngIf="localdata.type === 'User'">
+        <div *ngIf="localdata.action !== 'Delete'; else elseTemplate">
+        <mat-form-field color="warn">
+          <input matInput placeholder="First Name" [(ngModel)]="localdata.firstname" formControlName="firstname" required>
+          <mat-error *ngIf="hasError('firstname', 'required')">First name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="warn">
+          <input matInput placeholder="Last Name" [(ngModel)]="localdata.lastname" formControlName="lastname" required>
+          <mat-error *ngIf="hasError('lastname', 'required')">Last name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="warn">
+          <input matInput placeholder="User Name / Email Id" [(ngModel)]="localdata.emailaddress" formControlName="emailaddress" required>
+          <mat-error *ngIf="hasError('emailaddress', 'required')">User name / Email Id is required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="warn">
+          <input matInput placeholder="Password" [(ngModel)]="localdata.password" formControlName="password" required>
+          <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+        </mat-form-field>
+        <div>
+          <p>Is Admin?</p>
+          <mat-radio-group color="warn" [(ngModel)]="localdata.isadmin" formControlName="isadmin" required>
+            <mat-radio-button value="true">Yes </mat-radio-button>
+            <mat-radio-button value="false">No</mat-radio-button>
+           <!-- <mat-error *ngIf="hasError('is_admin', 'required')">Value is required</mat-error>-->
+          </mat-radio-group>
+        </div>
+      </div>
+      </div>
+
     <div *ngIf="localdata.type === 'Campaign'">
       <mat-form-field color="warn" *ngIf="localdata.action !== 'Delete'; else elseTemplate">
         <input matInput placeholder="Campaign Name" [(ngModel)]="localdata.name" formControlName="name" required>
@@ -24,14 +53,14 @@
           <mat-error  *ngIf="hasError('name', 'required')">Template Name is Required</mat-error>
         </mat-form-field>
         <mat-form-field color="warn">
-          <textarea matInput 
-                    cdkTextareaAutosize 
-                    cdkAutosizeMinRows="2" 
-                    cdkAutosizeMaxRows="10" 
-                    #autosize="cdkTextareaAutosize" 
-                    placeholder="Template Body" 
-                    [(ngModel)]="localdata.message_body" 
-                    formControlName="message_body" 
+          <textarea matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="2"
+                    cdkAutosizeMaxRows="10"
+                    #autosize="cdkTextareaAutosize"
+                    placeholder="Template Body"
+                    [(ngModel)]="localdata.message_body"
+                    formControlName="message_body"
                     required></textarea>
           <mat-error  *ngIf="hasError('message_body', 'required')">Template Body is Required</mat-error>
         </mat-form-field>

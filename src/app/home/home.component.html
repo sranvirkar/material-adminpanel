@@ -1,4 +1,4 @@
-<div class="all-wrap" [class.example-is-mobile]="mobileQuery.matches"> 
+<div class="all-wrap" [class.example-is-mobile]="mobileQuery.matches">
         <mat-toolbar color="primary">
           <mat-toolbar-row>
             <span class="hamburger-icon">
@@ -7,7 +7,8 @@
             <span class="toolbar-center"><h1>Butterfly Group Admin Panel</h1></span>
             <span>
                 <mat-menu #appMenu="matMenu">
-                    <button mat-menu-item>
+                  <div></div>
+                    <button mat-menu-item (click)="User($event)" [routerLink]="['./user']" *ngIf="isDisabled">
                         <mat-icon>settings</mat-icon>
                         <span>Settings</span>
                     </button>
@@ -16,7 +17,7 @@
                         <span>Logout</span>
                     </button>
                 </mat-menu>
-                
+
                 <button mat-icon-button [matMenuTriggerFor]="appMenu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
@@ -24,7 +25,7 @@
           </mat-toolbar-row>
         </mat-toolbar>
         <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        
+
           <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [(opened)]="navBarOpened">
               <div class="user-info">
                   <div class="image">
@@ -51,13 +52,20 @@
                       </div -->
                   </div>
               </div>
-            <mat-list>
+            <mat-list *ngIf="user === true">
+              <mat-list-item [routerLink]="['./user']" routerLinkActive="selected">
+                <mat-icon matListIcon>verified_user</mat-icon>
+                <h3 matLine>User</h3>
+            </mat-list-item>
+            </mat-list>
+
+            <mat-list *ngIf="user === false">
               <mat-list-item [routerLink]="['./campaign']" routerLinkActive="selected">
                   <mat-icon matListIcon>contactless</mat-icon>
                   <h3 matLine>Campaign</h3>
               </mat-list-item>
               <mat-list-item [routerLink]="['./messagetemplate']" routerLinkActive="selected">
-                <mat-icon matListIcon>message</mat-icon>              
+                <mat-icon matListIcon>message</mat-icon>
                 <h3 matLine>Message Template</h3>
               </mat-list-item>
             </mat-list>
@@ -70,15 +78,15 @@
                 </div>
             </div>
           </mat-sidenav>
-         
+
           <mat-sidenav-content class="content-wrap">
-         
+
             <main class="content">
                 <router-outlet></router-outlet>
             </main>
-         
+
           </mat-sidenav-content>
-         
+
         </mat-sidenav-container>
   </div>
   <mat-spinner style="margin:0 auto;"></mat-spinner>

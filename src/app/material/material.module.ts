@@ -13,7 +13,8 @@ import { MatInputModule,
   MatTableModule,
   MatTooltipModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule } from '@angular/material';
+  MatSnackBarModule,
+  MatRadioModule } from '@angular/material';
 
 const materialCompoent = [
   MatInputModule,
@@ -30,7 +31,8 @@ const materialCompoent = [
   MatTooltipModule,
   MatProgressSpinnerModule,
   OverlayModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatRadioModule
 ];
 
 @NgModule({

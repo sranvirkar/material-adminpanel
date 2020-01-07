@@ -16,6 +16,11 @@ export class DialogBoxComponent implements OnInit {
   CampaignID: string;
   TemplateBody: string;
   TemplateName: string;
+  FirstName: string;
+  LastName: string;
+  UserName: string;
+  PassWord: string;
+  IsAdmin: boolean;
   DataObj: any;
 
   @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
@@ -53,6 +58,25 @@ export class DialogBoxComponent implements OnInit {
             name: [this.TemplateName, [
               Validators.required
             ]]
+          };
+          break;
+        case 'User':
+          fields = {
+            firstname: [this.FirstName, [
+              Validators.required
+            ]],
+            lastname: [this.LastName, [
+              Validators.required
+            ]],
+            emailaddress: [this.UserName, [
+              Validators.required
+            ]],
+            password: [this.PassWord, [
+              Validators.required
+            ]],
+            isadmin: [this.IsAdmin, [
+              Validators.required
+            ]],
           };
           break;
       }

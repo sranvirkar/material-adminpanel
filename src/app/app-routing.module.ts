@@ -1,3 +1,4 @@
+import { UserComponent } from './user/user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
@@ -17,6 +18,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'campaign', pathMatch: 'full'},
       {path: 'campaign', component: CampaignComponent},
       {path: 'messagetemplate', component: MessageTemplateComponent},
+      {path: 'user', component: UserComponent},
     ],
     canActivate: [AuthGuard]
   }

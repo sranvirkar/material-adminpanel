@@ -85,5 +85,25 @@ export class APIService {
     return this.httpClient.get(`${this.apiBase}/api/messagetemplate/delete/${Id}`);
   }
 
-
+  public getAllUsers() {
+    return this.httpClient.get(`${this.apiBase}/api/getAllUsers`);
+  }
+  public saveUser(userObj: any) {
+    //campaignObj = {campaignName: campaignObj.name };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.httpClient.post(`${this.apiBase}/api/user/new`, userObj, httpOptions);
+  }
+  public updateUser(userObj: any) {
+    //campaignObj = {campaignName: campaignObj.name };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.httpClient.post(`${this.apiBase}/api/user/update`, userObj, httpOptions);
+  }
 }
