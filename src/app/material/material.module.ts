@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { OverlayModule } from '@angular/cdk/overlay'
+import { OverlayModule } from '@angular/cdk/overlay';
 import { MatInputModule,
   MatButtonModule,
   MatSelectModule,
@@ -32,7 +32,7 @@ const materialCompoent = [
   MatProgressSpinnerModule,
   OverlayModule,
   MatSnackBarModule,
-  MatRadioModule
+  MatRadioModule,
 ];
 
 @NgModule({

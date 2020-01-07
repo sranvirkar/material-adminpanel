@@ -15,19 +15,23 @@
         </mat-form-field>
         <mat-form-field color="warn">
           <input matInput placeholder="User Name / Email Id" [(ngModel)]="localdata.emailaddress" formControlName="emailaddress" required>
-          <mat-error *ngIf="hasError('emailaddress', 'required')">User name / Email Id is required</mat-error>
+          <mat-error *ngIf="hasError('emailaddress', 'required')">Email Id is required</mat-error>
+          <mat-error *ngIf="hasError('emailaddress', 'email')">Email Id is not valid</mat-error>
         </mat-form-field>
         <mat-form-field color="warn">
           <input matInput placeholder="Password" [(ngModel)]="localdata.password" formControlName="password" required>
           <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+          <mat-error *ngIf="hasError('password', 'minlength')">Minimum lenght is 8</mat-error>
+          <mat-error *ngIf="hasError('password', 'maxlength')">Maximum lenght is 16</mat-error>
         </mat-form-field>
         <div>
-          <p>Is Admin?</p>
+          <p>Is Admin? *</p>
           <mat-radio-group color="warn" [(ngModel)]="localdata.isadmin" formControlName="isadmin" required>
             <mat-radio-button value="true">Yes </mat-radio-button>
             <mat-radio-button value="false">No</mat-radio-button>
-           <!-- <mat-error *ngIf="hasError('is_admin', 'required')">Value is required</mat-error>-->
+            <mat-error *ngIf="hasError('isadmin', 'required')">Value is required</mat-error>
           </mat-radio-group>
+
         </div>
       </div>
       </div>

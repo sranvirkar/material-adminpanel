@@ -1,5 +1,9 @@
 <div class="user-wrapper">
-
+<div class="breadcrumb">
+  <span class="breadcrumb-item"><a mat-button  (click)="btnfun()" routerLinkActive="active">Home</a></span>
+  <span>/</span>
+  <span color="warn" class="breadcrumb-item2" ><a mat-button>Settings</a></span>
+</div>
   <div class="top-action-cont">
     <div class="top-btn-container">
       <button mat-raised-button color="warn" (click)="openDialog('Add',{})">Add User</button>

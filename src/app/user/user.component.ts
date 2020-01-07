@@ -5,7 +5,7 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { APIService } from '../api.service';
 import { UiService } from '../ui.service';
 import { MessageBoxComponent } from '../message-box/message-box.component';
-
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -13,24 +13,24 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
   displayedColumns: string[] = ['Fname', 'Lname', 'Uname', 'IsAdmin' , 'created_at', 'Action'];
   ApiObj: any;
   details: any;
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
   SuccessMsg: string = 'Success Message';
 
-  constructor(public dialog: MatDialog, private apiService: APIService, private uiService: UiService) { }
+  constructor(public dialog: MatDialog, private apiService: APIService, private uiService: UiService, private _location: Location) { }
 
   ngOnInit() {
     this.uiService.showSpinner();
     this.refreshTable();
   }
-
   applyFilter(filteValue: string){
     this.details.filter = filteValue.trim().toLowerCase();
   }
-
+  btnfun(){
+    this._location.back();
+  }
   openDialog(action, obj) {
     const data = {
       type: "User",

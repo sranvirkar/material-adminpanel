@@ -69,10 +69,13 @@ export class DialogBoxComponent implements OnInit {
               Validators.required
             ]],
             emailaddress: [this.UserName, [
-              Validators.required
+              Validators.required,
+              Validators.email,
             ]],
             password: [this.PassWord, [
-              Validators.required
+              Validators.required,
+              Validators.minLength(8),
+              Validators.maxLength(18)
             ]],
             isadmin: [this.IsAdmin, [
               Validators.required

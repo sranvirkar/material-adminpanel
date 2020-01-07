@@ -4,7 +4,7 @@
             <span class="hamburger-icon">
               <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
             </span>
-            <span class="toolbar-center"><h1>Butterfly Group Admin Panel</h1></span>
+            <span class="toolbar-center"><h1 [routerLink]="['./campaign']">Butterfly Group Admin Panel</h1></span>
             <span>
                 <mat-menu #appMenu="matMenu">
                   <div></div>
@@ -54,7 +54,7 @@
               </div>
             <mat-list *ngIf="user === true">
               <mat-list-item [routerLink]="['./user']" routerLinkActive="selected">
-                <mat-icon matListIcon>verified_user</mat-icon>
+                <mat-icon matListIcon>account_box</mat-icon>
                 <h3 matLine>User</h3>
             </mat-list-item>
             </mat-list>

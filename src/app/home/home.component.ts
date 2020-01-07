@@ -1,5 +1,6 @@
+
 import {MediaMatcher} from '@angular/cdk/layout';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild  } from '@angular/core';
 import {Router} from "@angular/router"
 import { APIService } from "../api.service";
 import { HostListener } from '@angular/core';
@@ -10,6 +11,7 @@ import { HostListener } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
   isDisabled: boolean;
   user: boolean;
   title = 'admin-panel';
@@ -26,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.user = false;
 
   }
-
   ngOnInit() {
     let user = localStorage.getItem("loggedinuser");
     this.loggedInUser = user ? JSON.parse(user): {};
@@ -63,3 +64,4 @@ export class HomeComponent implements OnInit, OnDestroy {
   shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
 }
+
