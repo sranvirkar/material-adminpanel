@@ -26,12 +26,10 @@
         </mat-form-field>
         <div>
           <p>Is Admin? *</p>
-          <mat-radio-group color="warn" [(ngModel)]="localdata.isadmin" formControlName="isadmin" required>
-            <mat-radio-button value="true">Yes </mat-radio-button>
-            <mat-radio-button value="false">No</mat-radio-button>
-            <mat-error *ngIf="hasError('isadmin', 'required')">Value is required</mat-error>
+          <mat-radio-group name="isAdmin" color="warn" [(ngModel)]="localdata.isadmin" formControlName="isadmin" required  >
+            <mat-radio-button [checked]='localdata.isadmin === true' value="true" >Yes </mat-radio-button>
+            <mat-radio-button [checked]='localdata.isadmin === true ? false : true' value="false" >No</mat-radio-button>
           </mat-radio-group>
-
         </div>
       </div>
       </div>
